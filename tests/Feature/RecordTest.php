@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\Artist;
 use App\Models\Record;
-use Faker\Provider\en_US\Text;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
