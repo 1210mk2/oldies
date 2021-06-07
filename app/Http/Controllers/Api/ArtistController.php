@@ -24,6 +24,21 @@ class ArtistController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/artist/{id}",
+     *      tags={"Artist"},
+     *      summary="Get artist data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Artist id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Artist not found"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Display the specified resource.
      *
@@ -45,7 +60,30 @@ class ArtistController extends Controller
 
         return response()->json($artist, 200);
     }
+
     /**
+     * @OA\Post(
+     *      path="/artist",
+     *      tags={"Artist"},
+     *      summary="Create artist",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     description="Artist name",
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 required={"name"}
+     *             )
+     *          )
+     *      ),
+     *      @OA\Response(response=201, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=422, description="Got some errors"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Store a newly created resource in storage.
      *
@@ -74,8 +112,36 @@ class ArtistController extends Controller
         return response()->json([], 201);
     }
 
-
     /**
+     * @OA\Put(
+     *      path="/artist/{id}",
+     *      tags={"Artist"},
+     *      summary="Update artist data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Artist id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     description="Artist name",
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *             )
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Artist not found"),
+     *      @OA\Response(response=422, description="Got some errors"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Update the specified resource in storage.
      *
@@ -107,6 +173,21 @@ class ArtistController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *      path="/artist/{id}",
+     *      tags={"Artist"},
+     *      summary="Delete artist",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Artist id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Artist not found"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Remove the specified resource from storage.
      *

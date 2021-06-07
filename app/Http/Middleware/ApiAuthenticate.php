@@ -18,7 +18,7 @@ class ApiAuthenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        $token = $request->header('x-csrf-token');
+        $token = $request->header('api_key');
 
         if ($token !== env('API_KEY')) {
             throw new HttpException(401, 'Invalid token');

@@ -20,6 +20,21 @@ class SearchController extends Controller
 
 
     /**
+     * @OA\Get(
+     *      path="/search",
+     *      tags={"Search"},
+     *      summary="Search by all fields",
+     *      @OA\Parameter(
+     *          name="q",
+     *          description="query string",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(type="string")
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      security={{ "token": {} }}
+     *   )
+     *
      *
      * @param Request $request
      * @return Response

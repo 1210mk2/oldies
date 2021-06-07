@@ -24,6 +24,21 @@ class RecordController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/record/{id}",
+     *      tags={"Record"},
+     *      summary="Get record data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Record id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Record not found"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Display the specified resource.
      *
@@ -45,7 +60,40 @@ class RecordController extends Controller
 
         return response()->json($record, 200);
     }
+
     /**
+     * @OA\Post(
+     *      path="/record",
+     *      tags={"Record"},
+     *      summary="Create record",
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     description="Record name",
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     description="Record artist id",
+     *                     property="_artist",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     description="Record cat number",
+     *                     property="catno",
+     *                     type="string"
+     *                 ),
+     *                 required={"name", "_artist"}
+     *             )
+     *          )
+     *      ),
+     *      @OA\Response(response=201, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=422, description="Got some errors"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Store a newly created resource in storage.
      *
@@ -74,8 +122,47 @@ class RecordController extends Controller
         return response()->json([], 201);
     }
 
-
     /**
+     * @OA\Put(
+     *      path="/record/{id}",
+     *      tags={"Record"},
+     *      summary="Update record data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Record id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     description="Record name",
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     description="Record artist id",
+     *                     property="_artist",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     description="Record cat number",
+     *                     property="catno",
+     *                     type="string"
+     *                 ),
+     *                 required={"name", "_artist"}
+     *             )
+     *          )
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Record not found"),
+     *      @OA\Response(response=422, description="Got some errors"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Update the specified resource in storage.
      *
@@ -107,6 +194,21 @@ class RecordController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *      path="/record/{id}",
+     *      tags={"Record"},
+     *      summary="Delete record",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Record id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(response=200, description="successful operation", @OA\JsonContent()),
+     *      @OA\Response(response=404, description="Record not found"),
+     *      security={{ "token": {} }}
+     *   )
      *
      * Remove the specified resource from storage.
      *
@@ -137,12 +239,13 @@ class RecordController extends Controller
 
     private function getValidatedData($request)
     {
-        $validate_array = $request->only(['name', '_artist']);
+        $validate_array = $request->only(['name', '_artist', 'catno']);
 
         $validate_rules = [
 
             'name'          => 'required|max:256',
             '_artist'       => 'required|integer',
+            'catno'         => 'max:20',
         ];
 
         $validator = Validator::make($validate_array, $validate_rules);
