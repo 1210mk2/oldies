@@ -38,4 +38,31 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ErrorException) {
+
+            return response()->json([
+
+                '_error' => $exception->getMessage(),
+
+            ], 422);
+
+        } elseif ($exception instanceof NotFoundException) {
+
+            return response()->json([], 404);
+        }
+
+        return parent::render($request, $exception);
+    }
 }
