@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('apiauth')->group(function () {
+
+    Route::resource('/artist', '\App\Http\Controllers\Api\ArtistController')
+        ->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('/record', '\App\Http\Controllers\Api\RecordController')
+        ->only(['index', 'show', 'store', 'update', 'destroy']);
+});
