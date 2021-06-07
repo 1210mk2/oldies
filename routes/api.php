@@ -24,4 +24,5 @@ Route::middleware('apiauth')->group(function () {
         ->only(['index', 'show', 'store', 'update', 'destroy']);
     Route::resource('/record', '\App\Http\Controllers\Api\RecordController')
         ->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::get('/search', '\App\Http\Controllers\Api\SearchController@search');
 });
